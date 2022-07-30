@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "lib":["ESNext"],
+    "module":"ESNext",
+    "moduleResolution": "node",
+    "strict": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "rootDirs": ["./src/"],
+    "outDir": "",
+    "target":"ESNext",
+    "typeRoots": [
+      "./typings",
+      "node_modules/ISUI", 
+      "node_modules/Zomboid", 
+      "node_modules/ZomboidEvents", 
+      "node_modules/@types", 
+      "lua-types/5.1"
+    ],
+    "types": ["lua-types/5.1"]
+  },
+  "tstl": {
+    "noHeader": true
+  },
+  "exclude": ["node_modules"],
+  "include": [
+    "./src/**/*.ts",
+    "./typings/**/*.d.ts",
+  ]
+}
