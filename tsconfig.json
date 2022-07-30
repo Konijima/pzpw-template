@@ -12,7 +12,7 @@
     "outDir": "",
     "target":"ESNext",
     "typeRoots": [
-      "./typings",
+      "./.typings",
       "node_modules/ISUI", 
       "node_modules/Zomboid", 
       "node_modules/ZomboidEvents", 
@@ -27,6 +27,6 @@
   "exclude": ["node_modules"],
   "include": [
     "./src/**/*.ts",
-    "./typings/**/*.d.ts",
+    "./.typings/**/*.d.ts",
   ]
 }
