@@ -1,5 +1,5 @@
 # PZPW Template
-This repository contains the main template used by PZPW when setting up a new project.
+Main template used by PZPW when setting up a new project.
 
 <br>
 
