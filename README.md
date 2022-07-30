@@ -6,6 +6,7 @@ Main template used by PZPW when setting up a new project.
 ## Use PZPW
 - Install pzpw, run `npm install -g pzpw`.
 - Create a new project, run `pzpw new`.
+- Add an additional mod to the project, run `pzpw add`.
 - Check pzpw options, run `pzpw help`.
 - Check out [PZPW Repository](https://github.com/Konijima/pzpw)
 
