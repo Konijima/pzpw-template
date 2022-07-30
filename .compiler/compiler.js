@@ -172,6 +172,8 @@ class Compiler {
             if (this.pzpwConfig.workshop[key] != null && this.pzpwConfig.workshop[key] != "") {
                 if (key == "id" && this.pzpwConfig.workshop[key] == -1)
                     return;
+                if (key == "mods")
+                    return; // ignore the mods array
                 content += `${key}=${this.pzpwConfig.workshop[key]}\r\n`;
             }
         });
