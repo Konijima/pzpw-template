@@ -4,3 +4,5 @@ node_modules/
 /typings/
 /workshop/
 /dist/
+/assets/mods/mod_test/
+/src/mod_test/
