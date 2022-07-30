@@ -38,15 +38,13 @@ class Compiler {
         const requireRegex = /require\("(.*)"\)/g;
         const sepRegex = /[.]/g;
         lua = lua.replaceAll(requireRegex, (match) => {
-            // console.log(match, ' to ');
-            let str = match
-                .replaceAll(sepRegex, "/") // Replace dots with slash
-                .replace("shared/", '') // Strip the scope
-                .replace("client/", '') // Strip the scope
-                .replace("server/", ''); // Strip the scope
-            if (removeModId) {
-                str = str.replace(`${removeModId}/`, "");
-            }
+            let str = match.replaceAll(sepRegex, "/"); // Replace dots with slash
+            str = str.replaceAll("'", '"'); // Replace single quote to double quotes
+            const requireLen = 'require("'.length;
+            str = str.replace(str.slice(requireLen, str.indexOf("client/") + "client/".length), ''); // Strip the scope
+            str = str.replace(str.slice(requireLen, str.indexOf("server/") + "server/".length), ''); // Strip the scope
+            str = str.replace(str.slice(requireLen, str.indexOf("shared/") + "shared/".length), ''); // Strip the scope
+            // console.log(match, ' to ', str);
             // console.log(str);
             return str;
         });
@@ -208,9 +206,9 @@ class Compiler {
             await this.copyNonCompileFilesInDir(`./src/${modId}/client`, `${distModDirectory}/media/lua/client`);
             await this.copyNonCompileFilesInDir(`./src/${modId}/server`, `${distModDirectory}/media/lua/server`);
             await this.copyNonCompileFilesInDir(`./src/${modId}/shared`, `${distModDirectory}/media/lua/shared`);
-            await this.copyNodeModules("ISUI/ISUI.lua", `${distModDirectory}/media/lua/client/ISUI.lua`);
-            await this.copyNodeModules("Zomboid/Zomboid.lua", `${distModDirectory}/media/lua/shared/Zomboid.lua`);
-            await this.copyNodeModules("ZomboidEvents/ZomboidEvents.lua", `${distModDirectory}/media/lua/shared/ZomboidEvents.lua`);
+            await this.copyNodeModules("PipeWrench/PipeWrench.lua", `${distModDirectory}/media/lua/shared/PipeWrench.lua`);
+            await this.copyNodeModules("PipeWrench-Events/PipeWrench-Events.lua", `${distModDirectory}/media/lua/shared/PipeWrench-Events.lua`);
+            await this.copyNodeModules("PipeWrench-Utils/PipeWrench-Utils.lua", `${distModDirectory}/media/lua/shared/PipeWrench-Utils.lua`);
         }
         (0, typescript_to_lua_1.transpileProject)('tsconfig.json', { emitDeclarationOnly: false }, async (fileName, lua, _writeByteOrderMark, _onError) => {
             if (lua.length === 0)
@@ -236,6 +234,7 @@ class Compiler {
             if (!modIds.includes(modId))
                 return; // modId must be configurated in pzpw-config.json
             lua = Compiler.FixRequire(lua, (multiMods) ? modId : null);
+            lua = this.applyReimportScript(lua);
             const outPath = (0, path_1.join)(__dirname, `../dist/${modId}/media/lua/${scope}/${filepath}`);
             await this.prepareDir(outPath);
             await (0, promises_1.writeFile)(outPath, lua);
@@ -287,6 +286,38 @@ class Compiler {
             const workshopModDirectory = `./workshop/Contents/mods/${modId}`;
             await (0, promises_1.cp)(`${distModDirectory}`, `${workshopModDirectory}`, { recursive: true });
         }
+    }
+    REIMPORT_TEMPLATE = `-- PIPEWRENCH --
+if _G.Events.OnPipeWrenchBoot == nil then
+  _G.triggerEvent('OnPipeWrenchBoot', false)
+end
+_G.Events.OnPipeWrenchBoot.Add(function(____flag____)
+  if ____flag____ ~= true then return end
+  -- {IMPORTS}
+end)
+----------------`;
+    applyReimportScript(lua) {
+        const assignments = [];
+        const lines = lua.split('\n');
+        // Look for any PipeWrench assignments.
+        for (const line of lines) {
+            if (line.indexOf('local ') === 0 && line.indexOf('____PipeWrench.') !== -1) {
+                assignments.push(line.replace('local ', ''));
+            }
+        }
+        // Only generate a reimport codeblock if there's anything to import.
+        if (!assignments.length)
+            return lua;
+        // Take out the returns statement so we can insert before it.
+        lines.pop();
+        const returnLine = lines.pop();
+        lines.push('');
+        // Build the reimport event.
+        let compiledImports = '';
+        for (const assignment of assignments)
+            compiledImports += `${assignment}\n`;
+        const reimports = this.REIMPORT_TEMPLATE.replace('-- {IMPORTS}', compiledImports.substring(0, compiledImports.length - 1));
+        return `${lines.join('\n')}\n${reimports}\n\n${returnLine}\n`;
     }
 }
 new Compiler();
