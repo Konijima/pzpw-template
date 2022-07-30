@@ -32,14 +32,14 @@
   },
   "homepage": "https://github.com/Konijima/PipeWrenchTemplate",
   "dependencies": {
-    "ISUI": "github:Konijima/PipeWrench-ISUI-Type",
-    "Zomboid": "github:Konijima/PipeWrench-Zomboid-Types",
-    "ZomboidEvents": "github:Konijima/PipeWrench-ZomboidEvents-Types"
+    "PipeWrench": "github:asledgehammer/PipeWrench#41.71",
+    "PipeWrench-Events": "github:asledgehammer/PipeWrench-Events#41.71",
+    "PipeWrench-Utils": "github:asledgehammer/PipeWrench-Utils#41.71"
   },
   "devDependencies": {
-    "colors": "^1.4.0",
     "ansi": "^0.3.1",
     "chokidar": "^3.5.3",
+    "colors": "^1.4.0",
     "del-cli": "^4.0.1",
     "lua-types": "^2.11.0",
     "ts-node": "^10.7.0",
