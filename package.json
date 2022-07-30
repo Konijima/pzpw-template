@@ -5,11 +5,11 @@
   "main": "",
   "scripts": {
     "clean": "del-cli --force ./dist ./workshop ./declaration",
-    "build-compiler": "tsc --project compiler/",
-    "compile-distribution": "node ./compiler/compiler.js distribution",
-    "compile-development": "node ./compiler/compiler.js development",
-    "compile-declaration": "node ./compiler/compiler.js declaration",
-    "compile-workshop": "node ./compiler/compiler.js workshop"
+    "build-compiler": "tsc --project .compiler/",
+    "compile-distribution": "node ./.compiler/compiler.js distribution",
+    "compile-development": "node ./.compiler/compiler.js development",
+    "compile-declaration": "node ./.compiler/compiler.js declaration",
+    "compile-workshop": "node ./.compiler/compiler.js workshop"
   },
   "repository": {
     "type": "git",
