@@ -1,32 +1,16 @@
 {
     "mods": {
-        "pipewrench_mod_template": {
-            "name": "PipeWrench Mod Template",
-            "description": "My new mod description.",
-            "poster": "poster.png",
-            "icon": "icon.png"
-        },
-        "pipewrench_mod_template2": {
-            "name": "PipeWrench Mod Template2",
-            "description": "My new mod description.",
-            "poster": "poster.png",
-            "icon": "icon.png"
-        }
+        
     },
     "workshop": {
         "id": -1,
-        "title": "PipeWrench Mod Template",
-        "author": "Konijima",
+        "title": "",
+        "author": "",
         "visibility": "public",
-        "mods": [
-            "pipewrench_mod_template",
-            "pipewrench_mod_template2"
-        ],
+        "mods": [],
         "tags": [
             "Build 41"
         ]
     },
-    "typings": {
-        
-    }
+    "typings": {}
 }
