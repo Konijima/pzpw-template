@@ -22,7 +22,8 @@
     "types": ["lua-types/5.1"]
   },
   "tstl": {
-    "noHeader": true
+    "noHeader": true,
+    "noImplicitSelf": true
   },
   "exclude": ["node_modules"],
   "include": [
