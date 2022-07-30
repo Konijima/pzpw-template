@@ -19,12 +19,12 @@
     "Project Zomboid",
     "asledgehammer",
     "PipeWrench",
-    "Modding Tools",
-    "zomboid_lua_test"
+    "Modding Framework"
   ],
   "author": "asledgehammer",
   "contributors": [
-    "Konijima"
+    "Konijima",
+    "Zed"
   ],
   "license": "ISC",
   "bugs": {
