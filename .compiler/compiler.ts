@@ -1,6 +1,5 @@
 /**
  *  Rewrite of the original compiler.
- *  Currently incompleted, don't use it yet.
  */
 
 import { copyFile, cp, appendFile, rm, mkdir, readFile, writeFile, readdir, stat } from "fs/promises";

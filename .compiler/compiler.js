@@ -1,7 +1,6 @@
 "use strict";
 /**
  *  Rewrite of the original compiler.
- *  Currently incompleted, don't use it yet.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 const promises_1 = require("fs/promises");

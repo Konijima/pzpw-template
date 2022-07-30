@@ -1,11 +1,11 @@
 {
-  "name": "pipewrench_mod_template",
+  "name": "pzpw-template",
   "version": "1.0.0",
-  "description": "",
+  "description": "Main template used by PZPW when setting up a new project.",
   "main": "",
   "scripts": {
     "clean": "del-cli --force ./dist ./workshop ./declaration",
-    "build-compiler": "tsc --project .compiler/",
+    "build-compiler": "tsc --project ./.compiler/",
     "compile-distribution": "node ./.compiler/compiler.js distribution",
     "compile-development": "node ./.compiler/compiler.js development",
     "compile-declaration": "node ./.compiler/compiler.js declaration",
