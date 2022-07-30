@@ -7,6 +7,7 @@ This repository contains the main template used by PZPW when setting up a new pr
 - Install pzpw, run `npm install -g pzpw`.
 - Create a new project, run `pzpw new`.
 - Check pzpw options, run `pzpw help`.
+- Check out [PZPW Repository](https://github.com/Konijima/pzpw)
 
 ## PZPW Commands
 - `pzpw new`: Generate a new pzpw project.
