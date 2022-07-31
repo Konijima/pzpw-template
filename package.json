@@ -32,9 +32,9 @@
   },
   "homepage": "https://github.com/Konijima/PipeWrenchTemplate",
   "dependencies": {
-    "PipeWrench": "github:asledgehammer/PipeWrench#41.71",
-    "PipeWrench-Events": "github:asledgehammer/PipeWrench-Events#41.71",
-    "PipeWrench-Utils": "github:asledgehammer/PipeWrench-Utils#41.71"
+    "PipeWrench": "github:asledgehammer/PipeWrench",
+    "PipeWrench-Events": "github:asledgehammer/PipeWrench-Events",
+    "PipeWrench-Utils": "github:asledgehammer/PipeWrench-Utils"
   },
   "devDependencies": {
     "ansi": "^0.3.1",
