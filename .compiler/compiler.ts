@@ -67,7 +67,7 @@ class Compiler {
         console.log(red(`COMPILE ERROR: ${error.message}`));
     }
 
-    public static FixRequire(lua: string, removeModId: string) {
+    public static FixRequire(lua: string, modId: string) {
         if (lua.length === 0) return '';
 
         // Zed regex
@@ -83,6 +83,10 @@ class Compiler {
             str = str.replace(str.slice(requireLen, str.indexOf("server/") + "server/".length), '') // Strip the scope
             str = str.replace(str.slice(requireLen, str.indexOf("shared/") + "shared/".length), '') // Strip the scope
             
+            str = (str == `require("PipeWrench")`) ? `require("${modId}/PipeWrench")` : str;
+            str = (str == `require("PipeWrench-Events")`) ? `require("${modId}/PipeWrench-Events")` : str;
+            str = (str == `require("PipeWrench-Utils")`) ? `require("${modId}/PipeWrench-Utils")` : str;
+
             // console.log(match, ' to ', str);
             // console.log(str);
             return str;
@@ -243,9 +247,9 @@ class Compiler {
             await this.copyNonCompileFilesInDir(`./src/${modId}/client`, `${distModDirectory}/media/lua/client`);
             await this.copyNonCompileFilesInDir(`./src/${modId}/server`, `${distModDirectory}/media/lua/server`);
             await this.copyNonCompileFilesInDir(`./src/${modId}/shared`, `${distModDirectory}/media/lua/shared`);
-            await this.copyNodeModules("PipeWrench/PipeWrench.lua", `${distModDirectory}/media/lua/shared/PipeWrench.lua`);
-            await this.copyNodeModules("PipeWrench-Events/PipeWrench-Events.lua", `${distModDirectory}/media/lua/shared/PipeWrench-Events.lua`);
-            await this.copyNodeModules("PipeWrench-Utils/PipeWrench-Utils.lua", `${distModDirectory}/media/lua/shared/PipeWrench-Utils.lua`);
+            await this.copyNodeModules("PipeWrench/PipeWrench.lua", `${distModDirectory}/media/lua/shared/${modId}/PipeWrench.lua`);
+            await this.copyNodeModules("PipeWrench-Events/PipeWrench-Events.lua", `${distModDirectory}/media/lua/shared/${modId}/PipeWrench-Events.lua`);
+            await this.copyNodeModules("PipeWrench-Utils/PipeWrench-Utils.lua", `${distModDirectory}/media/lua/shared/${modId}/PipeWrench-Utils.lua`);
         }
 
         transpileProject('tsconfig.json', { emitDeclarationOnly: false }, 
@@ -275,7 +279,7 @@ class Compiler {
 
             if (!modIds.includes(modId)) return; // modId must be configurated in pzpw-config.json
 
-            lua = Compiler.FixRequire(lua, (multiMods) ? modId : null);
+            lua = Compiler.FixRequire(lua, modId);
             lua = this.applyReimportScript(lua);
 
             const outPath = join(__dirname, `../dist/${modId}/media/lua/${scope}/${filepath}`);
