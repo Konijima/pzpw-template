@@ -295,6 +295,15 @@ class Compiler {
             await this.prependHeader(outPath);
         });
         
+        // Copy distribution files to /Zomboid/mods
+        for (let i = 0; i < modIds.length; i++) {
+            const modId = modIds[i];
+
+            console.log("Copy mod into Zomboid/mods/");
+            const homeDir = require('os').homedir();
+            await cp(`./dist/${modId}`, join(homeDir, "Zomboid", "mods", modId), { recursive: true, force: true });
+        }
+        
         await this.postCompile();
     }
 
