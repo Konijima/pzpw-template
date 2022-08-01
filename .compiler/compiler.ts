@@ -287,6 +287,7 @@ class Compiler {
             if (!modIds.includes(modId)) return; // modId must be configurated in pzpw-config.json
 
             lua = Compiler.FixRequire(lua, modId);
+            lua = lua.replaceAll("prototype.", "");
             lua = this.applyReimportScript(lua);
 
             const outPath = join(__dirname, `../dist/${modId}/media/lua/${scope}/${filepath}`);
