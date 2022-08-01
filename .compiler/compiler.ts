@@ -236,6 +236,12 @@ class Compiler {
         else Compiler.print(`Completed compilation in ${timeSeconds} second(s)!`);
     }
 
+    private async patchPipeWrenchEvents(filePath, modId) {
+        let content = await readFile(filePath, "utf-8");
+        content = content.replaceAll(`require("PipeWrench")`, `require("${modId}/PipeWrench")`);
+        await writeFile(filePath, content, "utf-8");
+    }
+
     private async compileDistribution() {
         const modIds = Object.keys(this.pzpwConfig.mods);
 
@@ -257,6 +263,8 @@ class Compiler {
             await this.copyNodeModules("PipeWrench/PipeWrench.lua", `${distModDirectory}/media/lua/shared/${modId}/PipeWrench.lua`);
             await this.copyNodeModules("PipeWrench-Events/PipeWrench-Events.lua", `${distModDirectory}/media/lua/shared/${modId}/PipeWrench-Events.lua`);
             await this.copyNodeModules("PipeWrench-Utils/PipeWrench-Utils.lua", `${distModDirectory}/media/lua/shared/${modId}/PipeWrench-Utils.lua`);
+        
+            await this.patchPipeWrenchEvents(`${distModDirectory}/media/lua/shared/${modId}/PipeWrench-Events.lua`, modId);
         }
 
         transpileProject('tsconfig.json', { emitDeclarationOnly: false }, 
