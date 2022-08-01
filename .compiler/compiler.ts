@@ -366,6 +366,10 @@ class Compiler {
     
             await cp(`${distModDirectory}`, `${workshopModDirectory}`, { recursive: true });
         }
+
+        console.log("Copy workshop mod into Zomboid/worshop/");
+        const homeDir = require('os').homedir();
+        await cp(`./workshop`, join(homeDir, "Zomboid", "workshop", this.pzpwConfig.workshop.title), { recursive: true, force: true });
     }
 
     private readonly REIMPORT_TEMPLATE = `-- PIPEWRENCH --
