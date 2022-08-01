@@ -180,6 +180,12 @@ class Compiler {
                 content += `${key}=${this.pzpwConfig.workshop[key]}\r\n`;
             }
         });
+        // Set workshop description
+        const description = await (0, promises_1.readFile)("./assets/workshop/description.txt", "utf-8");
+        const descriptionLines = description.split("\r\n");
+        descriptionLines.forEach(line => {
+            content += "description=" + line + "\r\n";
+        });
         try {
             await (0, promises_1.writeFile)(`./workshop/workshop.txt`, content);
         }
@@ -239,12 +245,20 @@ class Compiler {
             if (!modIds.includes(modId))
                 return; // modId must be configurated in pzpw-config.json
             lua = Compiler.FixRequire(lua, modId);
+            lua = lua.replaceAll("prototype.", "");
             lua = this.applyReimportScript(lua);
             const outPath = (0, path_1.join)(__dirname, `../dist/${modId}/media/lua/${scope}/${filepath}`);
             await this.prepareDir(outPath);
             await (0, promises_1.writeFile)(outPath, lua);
             await this.prependHeader(outPath);
         });
+        // Copy distribution files to /Zomboid/mods
+        for (let i = 0; i < modIds.length; i++) {
+            const modId = modIds[i];
+            console.log("Copy mod into Zomboid/mods/");
+            const homeDir = require('os').homedir();
+            await (0, promises_1.cp)(`./dist/${modId}`, (0, path_1.join)(homeDir, "Zomboid", "mods", modId), { recursive: true, force: true });
+        }
         await this.postCompile();
     }
     async compileDevelopment() {
@@ -291,6 +305,9 @@ class Compiler {
             const workshopModDirectory = `./workshop/Contents/mods/${modId}`;
             await (0, promises_1.cp)(`${distModDirectory}`, `${workshopModDirectory}`, { recursive: true });
         }
+        console.log("Copy workshop mod into Zomboid/worshop/");
+        const homeDir = require('os').homedir();
+        await (0, promises_1.cp)(`./workshop`, (0, path_1.join)(homeDir, "Zomboid", "workshop", this.pzpwConfig.workshop.title), { recursive: true, force: true });
     }
     REIMPORT_TEMPLATE = `-- PIPEWRENCH --
 if _G.Events.OnPipeWrenchBoot == nil then
