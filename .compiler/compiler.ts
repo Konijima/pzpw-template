@@ -215,6 +215,13 @@ class Compiler {
             }
         });
 
+        // Set workshop description
+        const description: string = await readFile("./assets/workshop/description.txt", "utf-8");
+        const descriptionLines = description.split("\r\n");
+        descriptionLines.forEach(line => {
+            content += "description=" + line + "\r\n";
+        });
+
         try { await writeFile(`./workshop/workshop.txt`, content); } catch(error) {
             Compiler.error(error);
         };
