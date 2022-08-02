@@ -33,7 +33,8 @@ interface WorkshopConfig {
 interface RootConfig {
     mods: { [id: string]: ModConfig },
     workshop: WorkshopConfig,
-    typings: { [key: string]: string }
+    typings: { [key: string]: string },
+    cachedir: string
 }
 
 class Compiler {
@@ -51,6 +52,7 @@ class Compiler {
         this.startTime = new Date().getTime();
         this.compileType = this.args[0] as CompileType;
         this.pzpwConfig = require("../pzpw-config.json");
+        if (!this.pzpwConfig.cachedir || this.pzpwConfig.cachedir == "") this.pzpwConfig.cachedir = join(require('os').homedir(), "Zomboid");
         this.readHeaderFooter().then(() => this.compile());
     }
 
@@ -308,9 +310,8 @@ class Compiler {
         for (let i = 0; i < modIds.length; i++) {
             const modId = modIds[i];
 
-            console.log("Copy mod into Zomboid/mods/");
-            const homeDir = require('os').homedir();
-            await cp(`./dist/${modId}`, join(homeDir, "Zomboid", "mods", modId), { recursive: true, force: true });
+            console.log(`Copying distribution mod into cachedir ${this.pzpwConfig.cachedir}/mods/`);
+            await cp(`./dist/${modId}`, join(this.pzpwConfig.cachedir, "mods", modId), { recursive: true, force: true });
         }
         
         await this.postCompile();
@@ -376,9 +377,8 @@ class Compiler {
             await cp(`${distModDirectory}`, `${workshopModDirectory}`, { recursive: true });
         }
 
-        console.log("Copy workshop mod into Zomboid/worshop/");
-        const homeDir = require('os').homedir();
-        await cp(`./workshop`, join(homeDir, "Zomboid", "workshop", this.pzpwConfig.workshop.title), { recursive: true, force: true });
+        console.log(`Copying workshop mod into cachedir ${this.pzpwConfig.cachedir}/worshop/`);
+        await cp(`./workshop`, join(this.pzpwConfig.cachedir, "workshop", this.pzpwConfig.workshop.title), { recursive: true, force: true });
     }
 
     private readonly REIMPORT_TEMPLATE = `-- PIPEWRENCH --

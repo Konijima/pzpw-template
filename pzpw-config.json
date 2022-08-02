@@ -12,5 +12,6 @@
             "Build 41"
         ]
     },
-    "typings": {}
+    "typings": {},
+    "cachedir": ""
 }
