@@ -19,6 +19,8 @@ class Compiler {
         this.startTime = new Date().getTime();
         this.compileType = this.args[0];
         this.pzpwConfig = require("../pzpw-config.json");
+        if (!this.pzpwConfig.cachedir || this.pzpwConfig.cachedir == "")
+            this.pzpwConfig.cachedir = (0, path_1.join)(require('os').homedir(), "Zomboid");
         this.readHeaderFooter().then(() => this.compile());
     }
     static print(text) {
@@ -261,9 +263,8 @@ class Compiler {
         // Copy distribution files to /Zomboid/mods
         for (let i = 0; i < modIds.length; i++) {
             const modId = modIds[i];
-            console.log("Copy mod into Zomboid/mods/");
-            const homeDir = require('os').homedir();
-            await (0, promises_1.cp)(`./dist/${modId}`, (0, path_1.join)(homeDir, "Zomboid", "mods", modId), { recursive: true, force: true });
+            console.log(`Copying distribution mod into cachedir ${this.pzpwConfig.cachedir}/mods/`);
+            await (0, promises_1.cp)(`./dist/${modId}`, (0, path_1.join)(this.pzpwConfig.cachedir, "mods", modId), { recursive: true, force: true });
         }
         await this.postCompile();
     }
@@ -311,9 +312,8 @@ class Compiler {
             const workshopModDirectory = `./workshop/Contents/mods/${modId}`;
             await (0, promises_1.cp)(`${distModDirectory}`, `${workshopModDirectory}`, { recursive: true });
         }
-        console.log("Copy workshop mod into Zomboid/worshop/");
-        const homeDir = require('os').homedir();
-        await (0, promises_1.cp)(`./workshop`, (0, path_1.join)(homeDir, "Zomboid", "workshop", this.pzpwConfig.workshop.title), { recursive: true, force: true });
+        console.log(`Copying workshop mod into cachedir ${this.pzpwConfig.cachedir}/worshop/`);
+        await (0, promises_1.cp)(`./workshop`, (0, path_1.join)(this.pzpwConfig.cachedir, "workshop", this.pzpwConfig.workshop.title), { recursive: true, force: true });
     }
     REIMPORT_TEMPLATE = `-- PIPEWRENCH --
 if _G.Events.OnPipeWrenchBoot == nil then
