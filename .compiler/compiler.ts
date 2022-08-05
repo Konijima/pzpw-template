@@ -339,7 +339,9 @@ class Compiler {
         async (fileName: string, declaration: string, _writeByteOrderMark: boolean, _onError?: (message: string) => void) => {
             if(declaration.length === 0) return;
 
-            fileName = fileName.slice(fileName.indexOf("src/") + 4);
+            if (fileName.includes("/client/")) fileName = fileName.slice(fileName.indexOf("/client/") + 8);
+            if (fileName.includes("/server/")) fileName = fileName.slice(fileName.indexOf("/server/") + 8);
+            if (fileName.includes("/shared/")) fileName = fileName.slice(fileName.indexOf("/shared/") + 8);
 
             const splits = fileName.split("/");
             const modId = splits.shift();
@@ -352,7 +354,8 @@ class Compiler {
             });
             lines.pop();
             lines.push(`}\r\n\r\n`);
-            lines.unshift(`declare module "${filepath.replace(".d.ts", "")}" {`);
+            lines.unshift(`declare module "${modId}" {`);
+            lines.unshift(`/** [${filepath.replace(".d.ts", "")}] */`);
 
             await appendFile(`./dts/${modId}.d.ts`, lines.join("\r\n"));
         });

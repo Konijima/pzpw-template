@@ -284,7 +284,12 @@ class Compiler {
         (0, typescript_to_lua_1.transpileProject)('tsconfig.json', { removeComments: true, emitDeclarationOnly: true }, async (fileName, declaration, _writeByteOrderMark, _onError) => {
             if (declaration.length === 0)
                 return;
-            fileName = fileName.slice(fileName.indexOf("src/") + 4);
+            if (fileName.includes("/client/"))
+                fileName = fileName.slice(fileName.indexOf("/client/") + 8);
+            if (fileName.includes("/server/"))
+                fileName = fileName.slice(fileName.indexOf("/server/") + 8);
+            if (fileName.includes("/shared/"))
+                fileName = fileName.slice(fileName.indexOf("/shared/") + 8);
             const splits = fileName.split("/");
             const modId = splits.shift();
             const filepath = splits.join('/');
@@ -295,7 +300,8 @@ class Compiler {
             });
             lines.pop();
             lines.push(`}\r\n\r\n`);
-            lines.unshift(`declare module "${filepath.replace(".d.ts", "")}" {`);
+            lines.unshift(`declare module "${modId}" {`);
+            lines.unshift(`/** [${filepath.replace(".d.ts", "")}] */`);
             await (0, promises_1.appendFile)(`./dts/${modId}.d.ts`, lines.join("\r\n"));
         });
         await this.postCompile();
