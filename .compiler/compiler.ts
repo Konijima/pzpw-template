@@ -213,12 +213,13 @@ class Compiler {
             if (this.pzpwConfig.mods[modId][key] != null) {
                 
                 const obj = this.pzpwConfig.mods[modId][key];
-                let value = obj;
+                let value;
                 if (Array.isArray(obj)) {
-                    value = obj.join(";");
+                    if (obj.length > 0) value = obj.join(";");
                 }
-                
-                content += `${key}=${value}\r\n`;
+                else value = obj;
+
+                if (value) content += `${key}=${value}\r\n`;
             }
         });
 
@@ -235,16 +236,17 @@ class Compiler {
         
         Object.keys(this.pzpwConfig.workshop).forEach((key: string) => {
             if (this.pzpwConfig.workshop[key] != null) {
-                if (key == "id" && this.pzpwConfig.workshop[key] == -1 ) return;
-                if (key == "mods") return; // ignore the mods array
+                if (key === "id" && this.pzpwConfig.workshop[key] == -1 ) return;
+                if (key === "mods") return; // ignore the mods array
 
                 let obj = this.pzpwConfig.workshop[key];
-                let value = obj;
+                let value;
                 if (Array.isArray(obj)) {
-                    value = obj.join(";");
+                    if (obj.length > 0) value = obj.join(";");
                 }
+                else value = obj;
 
-                content += `${key}=${value}\r\n`;
+                if (value) content += `${key}=${value}\r\n`;
             }
         });
 
