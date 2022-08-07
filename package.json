@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/Konijima/PipeWrenchTemplate",
   "dependencies": {
-    "PipeWrench": "github:asledgehammer/PipeWrench",
+    "PipeWrench": "github:asledgehammer/PipeWrench#stable",
     "PipeWrench-Events": "github:asledgehammer/PipeWrench-Events",
     "PipeWrench-Utils": "github:asledgehammer/PipeWrench-Utils"
   },
