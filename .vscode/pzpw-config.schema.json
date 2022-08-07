@@ -55,6 +55,7 @@
             "required": [
                 "title",
                 "visibility",
+                "tags",
                 "mods"
             ]
         },
