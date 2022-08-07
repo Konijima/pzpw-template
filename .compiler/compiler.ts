@@ -2,6 +2,7 @@
  *  Rewrite of the original compiler.
  */
 
+import { existsSync } from "fs";
 import { copyFile, cp, appendFile, rm, mkdir, readFile, writeFile, readdir, stat } from "fs/promises";
 import { dirname, join, resolve } from "path";
 import { green, magenta, red, yellow } from 'colors';
@@ -33,8 +34,7 @@ interface WorkshopConfig {
 interface RootConfig {
     mods: { [id: string]: ModConfig },
     workshop: WorkshopConfig,
-    typings: { [key: string]: string },
-    cachedir: string
+    typings: { [key: string]: string }
 }
 
 class Compiler {
@@ -44,6 +44,7 @@ class Compiler {
     private args: string[];
     private startTime: number;
     private copyright: string = "";
+    private cachedir: string = "";
     private pzpwConfig: RootConfig;
     readonly compileType: CompileType;
 
@@ -52,8 +53,18 @@ class Compiler {
         this.startTime = new Date().getTime();
         this.compileType = this.args[0] as CompileType;
         this.pzpwConfig = require("../pzpw-config.json");
-        if (!this.pzpwConfig.cachedir || this.pzpwConfig.cachedir == "") this.pzpwConfig.cachedir = join(require('os').homedir(), "Zomboid");
-        this.readHeaderFooter().then(() => this.compile());
+        this.getCachedir().then(() => {
+            this.readHeaderFooter().then(() => this.compile());
+        });
+    }
+
+    private async getCachedir() {
+        if (existsSync("./.cachedir")) {
+            this.cachedir = await readFile("./.cachedir", { encoding: "utf-8" });
+        }
+        if (!this.cachedir || this.cachedir == "") {
+            this.cachedir = join(require('os').homedir(), "Zomboid");
+        }
     }
 
     public static print(text: string) {
@@ -310,8 +321,8 @@ class Compiler {
         for (let i = 0; i < modIds.length; i++) {
             const modId = modIds[i];
 
-            console.log(`Copying distribution mod into cachedir ${this.pzpwConfig.cachedir}/mods/`);
-            await cp(`./dist/${modId}`, join(this.pzpwConfig.cachedir, "mods", modId), { recursive: true, force: true });
+            console.log(`Copying distribution mod into cachedir ${this.cachedir}/mods/`);
+            await cp(`./dist/${modId}`, join(this.cachedir, "mods", modId), { recursive: true, force: true });
         }
         
         await this.postCompile();
@@ -380,8 +391,8 @@ class Compiler {
             await cp(`${distModDirectory}`, `${workshopModDirectory}`, { recursive: true });
         }
 
-        console.log(`Copying workshop mod into cachedir ${this.pzpwConfig.cachedir}/worshop/`);
-        await cp(`./workshop`, join(this.pzpwConfig.cachedir, "workshop", this.pzpwConfig.workshop.title), { recursive: true, force: true });
+        console.log(`Copying workshop mod into cachedir ${this.cachedir}/worshop/`);
+        await cp(`./workshop`, join(this.cachedir, "workshop", this.pzpwConfig.workshop.title), { recursive: true, force: true });
     }
 
     private readonly REIMPORT_TEMPLATE = `-- PIPEWRENCH --
