@@ -15,10 +15,12 @@ type CompileType = "distribution" | "development" | "declaration" | "workshop";
 interface ModConfig {
     id: string
     name: string
-    version: string
     description: string
-    poster: string
-    icon: string
+    poster?: string
+    icon?: string
+    require?: string | string[]
+    pack?: string
+    tiledef?: string
     [key: string]: any
 }
 
@@ -27,7 +29,8 @@ interface WorkshopConfig {
     title: string
     mods: string[]
     visibility: Visibility
-    tags: string[]
+    author?: string | string[]
+    tags?: string[]
     [key: string]: any
 }
 
