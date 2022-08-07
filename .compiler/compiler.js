@@ -3,6 +3,7 @@
  *  Rewrite of the original compiler.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+const fs_1 = require("fs");
 const promises_1 = require("fs/promises");
 const path_1 = require("path");
 const colors_1 = require("colors");
@@ -12,6 +13,7 @@ class Compiler {
     args;
     startTime;
     copyright = "";
+    cachedir = "";
     pzpwConfig;
     compileType;
     constructor() {
@@ -19,9 +21,17 @@ class Compiler {
         this.startTime = new Date().getTime();
         this.compileType = this.args[0];
         this.pzpwConfig = require("../pzpw-config.json");
-        if (!this.pzpwConfig.cachedir || this.pzpwConfig.cachedir == "")
-            this.pzpwConfig.cachedir = (0, path_1.join)(require('os').homedir(), "Zomboid");
-        this.readHeaderFooter().then(() => this.compile());
+        this.getCachedir().then(() => {
+            this.readHeaderFooter().then(() => this.compile());
+        });
+    }
+    async getCachedir() {
+        if ((0, fs_1.existsSync)("./.cachedir")) {
+            this.cachedir = await (0, promises_1.readFile)("./.cachedir", { encoding: "utf-8" });
+        }
+        if (!this.cachedir || this.cachedir == "") {
+            this.cachedir = (0, path_1.join)(require('os').homedir(), "Zomboid");
+        }
     }
     static print(text) {
         console.log((0, colors_1.green)(`COMPILE: ${text}`));
@@ -159,10 +169,23 @@ class Compiler {
     async createModInfo(modId) {
         let content = "";
         Object.keys(this.pzpwConfig.mods[modId]).forEach((key) => {
-            if (this.pzpwConfig.mods[modId][key] != null && this.pzpwConfig.mods[modId][key] != "") {
-                content += `${key}=${this.pzpwConfig.mods[modId][key]}\r\n`;
+            if (this.pzpwConfig.mods[modId][key] != null) {
+                const obj = this.pzpwConfig.mods[modId][key];
+                let value;
+                if (Array.isArray(obj)) {
+                    if (obj.length > 0)
+                        value = obj.join(";");
+                }
+                else
+                    value = obj;
+                if (value)
+                    content += `${key}=${value}\r\n`;
             }
         });
+        if (!this.pzpwConfig.mods[modId].icon)
+            content += `icon=icon.png\r\n`;
+        if (!this.pzpwConfig.mods[modId].poster)
+            content += `poster=poster.png\r\n`;
         try {
             await (0, promises_1.writeFile)(`./dist/${modId}/mod.info`, content);
         }
@@ -174,12 +197,21 @@ class Compiler {
     async createWorkshopTxt() {
         let content = "version=1\r\n";
         Object.keys(this.pzpwConfig.workshop).forEach((key) => {
-            if (this.pzpwConfig.workshop[key] != null && this.pzpwConfig.workshop[key] != "") {
-                if (key == "id" && this.pzpwConfig.workshop[key] == -1)
+            if (this.pzpwConfig.workshop[key] != null) {
+                if (key === "id" && this.pzpwConfig.workshop[key] == -1)
                     return;
-                if (key == "mods")
+                if (key === "mods")
                     return; // ignore the mods array
-                content += `${key}=${this.pzpwConfig.workshop[key]}\r\n`;
+                let obj = this.pzpwConfig.workshop[key];
+                let value;
+                if (Array.isArray(obj)) {
+                    if (obj.length > 0)
+                        value = obj.join(";");
+                }
+                else
+                    value = obj;
+                if (value)
+                    content += `${key}=${value}\r\n`;
             }
         });
         // Set workshop description
@@ -263,8 +295,8 @@ class Compiler {
         // Copy distribution files to /Zomboid/mods
         for (let i = 0; i < modIds.length; i++) {
             const modId = modIds[i];
-            console.log(`Copying distribution mod into cachedir ${this.pzpwConfig.cachedir}/mods/`);
-            await (0, promises_1.cp)(`./dist/${modId}`, (0, path_1.join)(this.pzpwConfig.cachedir, "mods", modId), { recursive: true, force: true });
+            console.log(`Copying distribution mod into cachedir ${this.cachedir}/mods/`);
+            await (0, promises_1.cp)(`./dist/${modId}`, (0, path_1.join)(this.cachedir, "mods", modId), { recursive: true, force: true });
         }
         await this.postCompile();
     }
@@ -318,8 +350,8 @@ class Compiler {
             const workshopModDirectory = `./workshop/Contents/mods/${modId}`;
             await (0, promises_1.cp)(`${distModDirectory}`, `${workshopModDirectory}`, { recursive: true });
         }
-        console.log(`Copying workshop mod into cachedir ${this.pzpwConfig.cachedir}/worshop/`);
-        await (0, promises_1.cp)(`./workshop`, (0, path_1.join)(this.pzpwConfig.cachedir, "workshop", this.pzpwConfig.workshop.title), { recursive: true, force: true });
+        console.log(`Copying workshop mod into cachedir ${this.cachedir}/worshop/`);
+        await (0, promises_1.cp)(`./workshop`, (0, path_1.join)(this.cachedir, "workshop", this.pzpwConfig.workshop.title), { recursive: true, force: true });
     }
     REIMPORT_TEMPLATE = `-- PIPEWRENCH --
 if _G.Events.OnPipeWrenchBoot == nil then
