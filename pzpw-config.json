@@ -4,9 +4,10 @@
     },
     "workshop": {
         "title": "",
-        "author": "",
         "visibility": "public",
-        "mods": [],
+        "mods": [
+            
+        ],
         "tags": [
             "Build 41"
         ]
