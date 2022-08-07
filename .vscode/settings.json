@@ -1,0 +1,10 @@
+{
+    "json.schemas": [
+        {
+            "fileMatch": [
+                "pzpw-config.json"
+            ],
+            "url": "./.vscode/pzpw-config.schema.json"
+        }
+    ]
+}
