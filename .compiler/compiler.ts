@@ -222,6 +222,9 @@ class Compiler {
             }
         });
 
+        if (!this.pzpwConfig.mods[modId].icon) content += `icon=icon.png\r\n`;
+        if (!this.pzpwConfig.mods[modId].poster) content += `poster=poster.png\r\n`;
+
         try { await writeFile(`./dist/${modId}/mod.info`, content); } catch(error) {
             Compiler.error(error);
         };
