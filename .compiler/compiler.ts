@@ -210,8 +210,15 @@ class Compiler {
         let content = "";
         
         Object.keys(this.pzpwConfig.mods[modId]).forEach((key: string) => {
-            if (this.pzpwConfig.mods[modId][key] != null && this.pzpwConfig.mods[modId][key] != "") {
-                content += `${key}=${this.pzpwConfig.mods[modId][key]}\r\n`;
+            if (this.pzpwConfig.mods[modId][key] != null) {
+                
+                const obj = this.pzpwConfig.mods[modId][key];
+                let value = obj;
+                if (Array.isArray(obj)) {
+                    value = obj.join(";");
+                }
+                
+                content += `${key}=${value}\r\n`;
             }
         });
 
@@ -224,10 +231,17 @@ class Compiler {
         let content = "version=1\r\n";
         
         Object.keys(this.pzpwConfig.workshop).forEach((key: string) => {
-            if (this.pzpwConfig.workshop[key] != null && this.pzpwConfig.workshop[key] != "") {
+            if (this.pzpwConfig.workshop[key] != null) {
                 if (key == "id" && this.pzpwConfig.workshop[key] == -1 ) return;
                 if (key == "mods") return; // ignore the mods array
-                content += `${key}=${this.pzpwConfig.workshop[key]}\r\n`;
+
+                let obj = this.pzpwConfig.workshop[key];
+                let value = obj;
+                if (Array.isArray(obj)) {
+                    value = obj.join(";");
+                }
+
+                content += `${key}=${value}\r\n`;
             }
         });
 
