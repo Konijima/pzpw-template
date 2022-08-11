@@ -10,7 +10,7 @@ import { transpileProject } from 'typescript-to-lua';
 
 type Scope = 'client' | 'server' | 'shared';
 type Visibility = 'public' | 'hidden' | 'unlisted';
-type CompileType = "distribution" | "development" | "declaration" | "workshop";
+type CompileType = "distribution" | "development" | "declaration" | "workshop" | "clean-distribution" | "clean-workshop";
 
 interface ModConfig {
     id: string
@@ -198,12 +198,33 @@ class Compiler {
                 case "workshop":
                     await this.compileWorkshop();
                     break;
+                case "clean-distribution":
+                    await this.cleanDistribution()
+                    break;
+                case "clean-workshop":
+                    await this.cleanWorkshop()
+                    break;
                 default:
                     await this.compileDistribution();
                     break;
             }
         }
         catch(error) { Compiler.error(error); }
+    }
+
+    private async cleanDistribution() {
+        const modIds = Object.keys(this.pzpwConfig.mods);
+        for (let i = 0; i < modIds.length; i++) {
+            const modId = modIds[i];
+
+            console.log(`Deleting ${this.cachedir}/mods/${modId}`);
+            await rm(join(this.cachedir, "mods", modId), { force: true, recursive: true });
+        }
+    }
+
+    private async cleanWorkshop() {
+        console.log(`Deleting ${this.cachedir}/worshop/${this.pzpwConfig.workshop.title}`);
+        await rm(join(this.cachedir, "workshop", this.pzpwConfig.workshop.title), { force: true, recursive: true });
     }
 
     private async createModInfo(modId: string) {
