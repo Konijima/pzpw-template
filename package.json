@@ -9,7 +9,9 @@
     "compile-distribution": "node ./.compiler/compiler.js distribution",
     "compile-development": "node ./.compiler/compiler.js development",
     "compile-declaration": "node ./.compiler/compiler.js declaration",
-    "compile-workshop": "node ./.compiler/compiler.js workshop"
+    "compile-workshop": "node ./.compiler/compiler.js workshop",
+    "clean-distribution": "node ./.compiler/compiler.js clean-distribution",
+    "clean-workshop": "node ./.compiler/compiler.js clean-workshop"
   },
   "repository": {
     "type": "git",
