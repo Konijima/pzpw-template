@@ -4,6 +4,7 @@
   "description": "Main template used by PZPW when setting up a new project.",
   "main": "",
   "scripts": {
+    "build": "tsc --p build.tsconfig.json",
     "clean": "del-cli --force ./dist ./workshop ./declaration",
     "build-compiler": "tsc --project ./.compiler/",
     "compile-distribution": "node ./.compiler/compiler.js distribution",

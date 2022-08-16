@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+      "allowSyntheticDefaultImports": true,
+      "declaration": false,
+      "experimentalDecorators": true,
+      "lib": [
+        "ESNext",
+        "DOM"
+      ],
+      "module": "ESNext",
+      "moduleResolution": "node",
+      "strict": true,
+      "target": "ESNext",
+      "types": [
+        "lua-types/5.1"
+      ],
+      "noEmit": true
+    },
+    "tstl": {
+      "noHeader": true
+    },
+    "include": [
+      "src/"
+    ]
+  }
