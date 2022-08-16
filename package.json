@@ -34,9 +34,9 @@
   },
   "homepage": "https://github.com/Konijima/PipeWrenchTemplate",
   "dependencies": {
-    "PipeWrench": "github:asledgehammer/PipeWrench#stable",
-    "PipeWrench-Events": "github:asledgehammer/PipeWrench-Events",
-    "PipeWrench-Utils": "github:asledgehammer/PipeWrench-Utils"
+    "PipeWrench": "github:Konijima/pzpw-pipewrench#stable",
+    "PipeWrench-Events": "github:Konijima/pzpw-pipewrench-events#stable",
+    "PipeWrench-Utils": "github:Konijima/pzpw-pipewrench-utils#stable"
   },
   "devDependencies": {
     "ansi": "^0.3.1",
