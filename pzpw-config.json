@@ -1,16 +1,17 @@
 {
-    "$schema": ".vscode/pzpw-config.schema.json",
+    "$schema": "pzpw-config.schema.json",
     "mods": {
-        
+
     },
     "workshop": {
         "title": "",
         "visibility": "public",
         "mods": [
-            
+
         ],
         "tags": [
-            "Build 41"
+            "Build 41",
+            "Literature"
         ]
     }
 }
