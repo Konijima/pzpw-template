@@ -1,18 +1,10 @@
 {
   "name": "pzpw-template",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Main template used by PZPW when setting up a new project.",
   "main": "",
+  "types": "./declaration",
   "scripts": {
-    "build": "tsc --p build.tsconfig.json",
-    "clean": "del-cli --force ./dist ./workshop ./declaration",
-    "build-compiler": "tsc --project ./.compiler/",
-    "compile-distribution": "node ./.compiler/compiler.js distribution",
-    "compile-development": "node ./.compiler/compiler.js development",
-    "compile-declaration": "node ./.compiler/compiler.js declaration",
-    "compile-workshop": "node ./.compiler/compiler.js workshop",
-    "clean-distribution": "node ./.compiler/compiler.js clean-distribution",
-    "clean-workshop": "node ./.compiler/compiler.js clean-workshop"
     "[ GITHUB COMMANDS ]": "",
     "test-build": "tsc --p build.tsconfig.json",
 
@@ -30,47 +22,31 @@
     "clean-cachedir-mods": "pzpw-compiler clean mods",
     "clean-cachedir-workshop": "pzpw-compiler clean workshop"
   },
+  "author": "Konijima",
+  "license": "MIT",
+  "homepage": "https://github.com/Konijima/pzpw-template",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Konijima/PipeWrenchTemplate.git"
+    "url": "git+https://github.com/Konijima/pzpw-template.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Konijima/pzpw-template/issues"
   },
   "keywords": [
-    "Project Zomboid",
-    "asledgehammer",
-    "PipeWrench",
-    "Modding Framework"
+    "pzpw",
+    "compiler",
+    "pipewrench",
+    "typescript",
+    "project-zomboid"
   ],
-  "author": "asledgehammer",
-  "contributors": [
-    "Konijima",
-    "Zed"
-  ],
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Konijima/PipeWrenchTemplate/issues"
-  },
-  "homepage": "https://github.com/Konijima/PipeWrenchTemplate",
   "dependencies": {
     "PipeWrench": "github:Konijima/pzpw-pipewrench#stable",
     "PipeWrench-Events": "github:Konijima/pzpw-pipewrench-events#stable",
     "PipeWrench-Utils": "github:Konijima/pzpw-pipewrench-utils#stable"
   },
   "devDependencies": {
-    "ansi": "^0.3.1",
-    "chokidar": "^3.5.3",
-    "colors": "^1.4.0",
     "del-cli": "^4.0.1",
     "lua-types": "^2.11.0",
-    "ts-node": "^10.7.0",
-    "typescript": "^4.6.2",
-    "typescript-to-lua": "^1.4.2"
-  },
-  "types": "./",
-  "typesVersions": {
-    ">=4.6": {
-      "*": [
-        "ts4.6/*"
-      ]
-    }
+    "typescript": "^4.6.2"
   }
 }
