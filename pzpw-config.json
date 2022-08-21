@@ -1,4 +1,5 @@
 {
+    "$schema": "https://raw.githubusercontent.com/Konijima/pzpw-config-schema/master/pzpw-config.schema.json",
     "mods": {
         
     },
