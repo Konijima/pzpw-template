@@ -1,8 +1,4 @@
 node_modules/
-/dts/
-/typings/
-/workshop/
-/dist/
-/assets/mods/mod_test/
-/src/mod_test/
-.cachedir
+dts/
+dist/
+workshop/
