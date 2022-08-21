@@ -16,6 +16,19 @@
     "[ GITHUB COMMANDS ]": "",
     "test-build": "tsc --p build.tsconfig.json",
 
+    "[ INSTALL COMMANDS ]": "",
+    "install-compiler": "echo \n\nTo install PZPW Compiler run this command in your terminal:\n         npm install -g pzpw-compiler\n\n",
+    "update-compiler": "pzpw-compiler update",
+
+    "[ COMPILER COMMANDS ]": "",
+    "compile-mods": "pzpw-compiler mods",
+    "compile-workshop": "pzpw-compiler workshop",
+
+    "[ CLEANUP COMMANDS ]": "",
+    "clean-all": "npm run clean-project && pzpw-compiler clean all",
+    "clean-project": "del-cli --force ./dist ./workshop ./declaration",
+    "clean-cachedir-mods": "pzpw-compiler clean mods",
+    "clean-cachedir-workshop": "pzpw-compiler clean workshop"
   },
   "repository": {
     "type": "git",
