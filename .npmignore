@@ -1,0 +1,12 @@
+.github
+.templates
+.vscode
+assets
+node_modules
+src
+.gitignore
+build.tsconfig.json
+pzpw.config.json
+tsconfig.json
+dist
+workshop
