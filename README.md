@@ -1,37 +1,33 @@
-# PZPW Template
-Main template used by PZPW when setting up a new project.
+[Wiki](https://github.com/asledgehammer/PipeWrench/wiki) | [PZPW](https://github.com/Konijima/pzpw) | [Compiler](https://github.com/Konijima/pzpw-compiler)
+|---|---|---|
 
 <br>
 
-## Use PZPW
-- Install pzpw, run `npm install -g pzpw`.
-- Create a new project, run `pzpw new`.
-- Add an additional mod to the project, run `pzpw add`.
-- Check pzpw options, run `pzpw help`.
-- Check out [PZPW Repository](https://github.com/Konijima/pzpw)
+# {workshop.title}
 
-## PZPW Commands
-- `pzpw new`: Generate a new pzpw project.
-- `pzpw add <ModID>`: Create an additional mod into the project.
-- `pzpw compile distribution`: Compile your project for distribution.
-- `pzpw compile development`: Compile your project in development mode.
-- `pzpw compile declaration`: Compile your project `.d.ts` file in `dst/`.
-- `pzpw compile workshop`: Compile your project and moves it to the `Zomboid/workshop/` directory.
+## Description
+{workshop.description}
 
 <br>
 
-----
+{mods.id}  
+{workshop.id}  
 
 <br>
 
-## Use NPM
-- Download or clone https://github.com/Konijima/pzpw-template
-- Run `npm install` in the main folder to install dependencies.
+> Copyright {year} {workshop.author}
 
-## NPM Commands
-- `npm run clean`: Deletes `dst/` and `media/lua/` directories.
-- `npm run build-compiler`: Compile the compiler script.
-- `npm run compile-distribution`: Compile your project for distribution.
-- `npm run compile-development`: Compile your project in development mode.
-- `npm run compile-declaration`: Compile your project `.d.ts` file in `dst/`.
-- `npm run compile-workshop`: Compile your project and moves it to the `Zomboid/workshop/` directory.
+<br>
+<hr>
+<br>
+
+## NPM Scripts:
+- `npm install` Install dependencies.
+- `npm run install-compiler`: Get instruction to install the compiler.
+- `npm run update-compiler`: Update the compiler.
+- `npm run compile-mods`: Compile your project individual mods.
+- `npm run compile-workshop`: Compile your project for workshop.
+- `npm run clean-all`: Clean your project and cachedir generated content.
+- `npm run clean-project`: Clean your project generated content.
+- `npm run clean-cachedir-mods`: Clean your cachedir generated mod directories.
+- `npm run clean-cachedir-workshop`: Clean your cachedir generated workshop directory.
