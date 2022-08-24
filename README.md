@@ -3,19 +3,19 @@
 
 <br>
 
-# {workshop.title}
+# {modName}
 
 ## Description
-{workshop.description}
+No description yet...
 
 <br>
 
-{mods.id}  
-{workshop.id}  
+Mod ID: {modId}
+Workshop ID: 
 
 <br>
 
-> Copyright {year} {workshop.author}
+> Copyright {year} {author}
 
 <br>
 <hr>
