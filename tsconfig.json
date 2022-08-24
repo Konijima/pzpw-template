@@ -12,7 +12,11 @@
   },
   "tstl": {
     "noHeader": true,
-    "noImplicitSelf": true
+    "noImplicitSelf": true,
+    "noResolvePaths": [
+      "@asledgehammer/pipewrench",
+      "@asledgehammer/pipewrench-events"
+    ]
   },
   "exclude": [
     "node_modules"
