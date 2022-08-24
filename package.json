@@ -37,9 +37,8 @@
     "project-zomboid"
   ],
   "dependencies": {
-    "PipeWrench": "github:Konijima/pzpw-pipewrench#stable",
-    "PipeWrench-Events": "github:Konijima/pzpw-pipewrench-events#stable",
-    "PipeWrench-Utils": "github:Konijima/pzpw-pipewrench-utils#stable"
+    "@asledgehammer/pipewrench": "latest",
+    "@asledgehammer/pipewrench-events": "latest"
   },
   "devDependencies": {
     "del-cli": "^4.0.1",
