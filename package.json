@@ -1,6 +1,6 @@
 {
   "name": "pzpw-template",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Main template used by PZPW when setting up a new project.",
   "main": "",
   "types": "./declaration",
