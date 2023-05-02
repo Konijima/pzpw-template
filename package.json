@@ -1,6 +1,6 @@
 {
   "name": "pzpw-template",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Main template used by PZPW when setting up a new project.",
   "main": "",
   "types": "./declaration",
@@ -38,11 +38,12 @@
   ],
   "dependencies": {
     "@asledgehammer/pipewrench": "latest",
-    "@asledgehammer/pipewrench-events": "latest"
+    "@asledgehammer/pipewrench-events": "latest",
+    "@typescript-to-lua/language-extensions": "latest"
   },
   "devDependencies": {
-    "del-cli": "^4.0.1",
-    "lua-types": "^2.11.0",
-    "typescript": "^4.6.2"
+    "del-cli": "latest",
+    "lua-types": "latest",
+    "typescript": "latest"
   }
 }
