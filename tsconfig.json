@@ -5,6 +5,7 @@
     "module":"ESNext",
     "moduleResolution": "node",
     "strict": true,
+    "noImplicitAny": false,
     "emitDeclarationOnly": false,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
